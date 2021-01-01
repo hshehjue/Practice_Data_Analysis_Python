@@ -1,0 +1,69 @@
+# Read, Write, Count Frequency
+
+# 1) Character count
+
+# Concatenate the script01 and script02 to count all the letters by alphabet at once 
+scripts = ["script01.txt", "script02.txt"] 
+
+with open("full_script.txt", "w") as outfile:  # with "with" statement, open an additional txt file into which the merged scripts will be written 
+    for scrpt in scripts:   # for loop brings each of the two scripts
+        with open(scrpt, "r") as infile:  
+            content = infile.read()   # open and read them
+            outfile.write(content) # all content from script01 and 02 are put into the outfile together
+            
+# open and read the full_script created above
+full = open("full_script.txt", "r")
+full_script = full.read()
+print(full_script)
+
+# Make a function to count the frequency of alphabet 
+alphabet = "abcdefghijklmnopqrstuvwxyz" # this alphabet string is being used for each letter of the script to be classified into alphabet
+outcome = {} # the keys of the dictionary go for each alphabet brought from the full_script and values display their frequency
+
+def count(script): 
+    for character in script:  # character parameter will be each letter in the script 
+        letter = character.lower()  # convert any potential uppercase to lowercase
+        if letter in alphabet:  # if the brought letter matches to any of the alphabet,
+            if letter not in outcome: # and if the alphabet has not been already placed in the dictionary,
+                outcome[letter] = 1  # add the alphabet to the dictionary's key and assign 1 to it as its value
+            else:
+                outcome[letter] += 1 # if the dictionary already have the specific alphabet, just add 1 to the value
+    return sorted(outcome.items(), key = lambda t:t[1], reverse = True) # return the outcome dictionary in descending order
+
+output = count(full_script) # save the resulting values with the name "output"
+
+# put the resulting values into a text file "parta.txt"
+parta = open("parta.txt", "w") # open a txt file with a writing mode
+for val in output:
+    parta.write(str(val))  # as a text file doesn't allow tuples to be written, convert the tuples to string
+parta.close()  # close the completed txt file
+
+# you can see the content of the parta.txt
+task1 = open("parta.txt", "r")
+task1.read() 
+
+txtlist = ["text1.txt", "text2.txt"]
+with open("onetext.txt", "w") as outfile:
+    for file in txtlist:
+        with open(file, "r") as infile:
+            content = infile.read()
+            outfile.write(content)
+     
+onetext = open("onetext.txt", "r")
+txt = onetext.read()
+print(txt)
+
+alphabet = "abcdefghijklmnopqrstuvwxyz"
+outcome = {}
+
+def count(text):
+    for char in text:
+        if char in alphabet:
+            if char not in outcome:
+                outcome[char] = 1
+            else:
+                outcome[char] += 1
+    return sorted(outcome.items(), key = lambda t:t[1], reverse = True)
+
+output = count(txt)
+output
